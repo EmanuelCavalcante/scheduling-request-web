@@ -30,7 +30,7 @@ public class QuartzConfig {
 	private Long startDelay = 0l;
 
 	// @Value("${job.repeatInterval}")
-	private Long repeatInterval = 60000l;
+	private Long repeatInterval = 6000l;
 
 	// @Value("${job.description}")
 	private String description = "Sample job";
