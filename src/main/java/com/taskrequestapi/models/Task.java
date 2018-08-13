@@ -1,6 +1,8 @@
 package com.taskrequestapi.models;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Task {
@@ -18,7 +21,6 @@ public class Task {
 	@Column
 	private Integer executeIn;
 
-	@Column
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_user", nullable = false)
 	private User user;
@@ -29,17 +31,29 @@ public class Task {
 	@Column
 	private Timestamp endTask;
 
+	@Column
+	private String url;
+
+	@Column
+	private String method;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_header", nullable = false)
+	private List<Header> header = new ArrayList<Header>();
+
 	public Task() {
-		super();
 	}
 
-	public Task(Integer id, Integer executeIn, User user, Timestamp startTask, Timestamp endTask) {
-		super();
+	public Task(Integer id, String url, String method, List<Header> header, Integer executeIn, User user,
+			Timestamp startTask, Timestamp endTask) {
 		this.id = id;
 		this.executeIn = executeIn;
 		this.user = user;
 		this.startTask = startTask;
 		this.endTask = endTask;
+		this.url = url;
+		this.method = method;
+		this.header = header;
 	}
 
 	public Integer getId() {
@@ -80,5 +94,29 @@ public class Task {
 
 	public void setEndTask(Timestamp endTask) {
 		this.endTask = endTask;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public List<Header> getHeader() {
+		return header;
+	}
+
+	public void setHeader(List<Header> header) {
+		this.header = header;
 	}
 }
