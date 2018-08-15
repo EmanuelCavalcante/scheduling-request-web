@@ -21,9 +21,8 @@ public class Task {
 	@Column
 	private Integer executeIn;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_user", nullable = false)
-	private User user;
+	@Column
+	private Boolean active;
 
 	@Column
 	private Timestamp startTask;
@@ -36,6 +35,10 @@ public class Task {
 
 	@Column
 	private String method;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_user", nullable = false)
+	private User user;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_header", nullable = false)
@@ -114,6 +117,14 @@ public class Task {
 
 	public List<Header> getHeader() {
 		return header;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public void setHeader(List<Header> header) {

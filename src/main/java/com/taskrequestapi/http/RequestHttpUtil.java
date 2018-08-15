@@ -5,9 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.taskrequestapi.models.Header;
+import com.taskrequestapi.models.Task;
+import com.taskrequestapi.models.TaskExecuted;
 
 public class RequestHttpUtil {
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36";
@@ -15,23 +20,30 @@ public class RequestHttpUtil {
 
 	private static HttpURLConnection conn;
 
-	public JsonObject request(String url, String method, String TOKEN) {
+	public TaskExecuted request(Task task) {
+		TaskExecuted taskExecuted = new TaskExecuted();
 		JsonObject jsonResponse = null;
 		try {
-			URL obj = new URL(url);
+			URL obj = new URL(task.getUrl());
 
 			conn = (HttpURLConnection) obj.openConnection();
-			conn.setRequestMethod(method);
+			conn.setRequestMethod(task.getMethod());
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
-			conn.setRequestProperty("Authorization", TOKEN);
+			for (Header header : task.getHeader()) {
+				conn.setRequestProperty(header.getKey(), header.getValue());
+			}
+
 			conn.setRequestProperty("Accept", "application/json");
 			conn.setRequestProperty("User-Agent", USER_AGENT);
 			conn.setRequestProperty("Content-Type", CONTENT_TYPE);
 
 			int responseCode = conn.getResponseCode();
-
-			// if (responseCode == HttpURLConnection.HTTP_OK) { // success
+			if (responseCode == 200) {
+				taskExecuted.setErro(false);
+			} else {
+				taskExecuted.setErro(true);
+			}
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String response = "";
 			String inputLine;
@@ -42,14 +54,19 @@ public class RequestHttpUtil {
 				JsonParser parser = new JsonParser();
 				jsonResponse = new JsonObject();
 				jsonResponse = parser.parse(response).getAsJsonObject();
+				taskExecuted.setResult(jsonResponse.toString());
 			} catch (Exception e) {
 				e.printStackTrace();
+				taskExecuted.setResult(e.toString());
 			}
 			// }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			taskExecuted.setResult(e.toString());
 		}
-		return jsonResponse;
+		Timestamp times = new Timestamp(new Date().getTime());
+		taskExecuted.setDate(times);
+		return taskExecuted;
 	}
 }
