@@ -2,12 +2,16 @@ package com.taskrequestapi.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "user_system")
 public class User {
-
 	@Id
+	@GeneratedValue
 	private Integer id;
 	@Column
 	private String email;
@@ -20,7 +24,7 @@ public class User {
 		super();
 	}
 
-	public User(Integer id, String email, String password, boolean active) {
+	public User(String email, String password, boolean active) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -59,4 +63,10 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", active=" + active + "]";
+	}
+
 }

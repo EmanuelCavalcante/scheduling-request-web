@@ -7,22 +7,26 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "task")
 public class Task {
 	@Id
-	@Column
+	@GeneratedValue
 	private Integer id;
 
 	@Column
 	private Integer executeIn;
 
 	@Column
-	private Boolean active;
+	private Boolean active = true;
 
 	@Column
 	private Timestamp startTask;
@@ -36,20 +40,19 @@ public class Task {
 	@Column
 	private String method;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_user", nullable = false)
 	private User user;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_header", nullable = false)
 	private List<Header> header = new ArrayList<Header>();
 
 	public Task() {
 	}
 
-	public Task(Integer id, String url, String method, List<Header> header, Integer executeIn, User user,
+	public Task(String url, String method, Boolean active, List<Header> header, Integer executeIn, User user,
 			Timestamp startTask, Timestamp endTask) {
-		this.id = id;
 		this.executeIn = executeIn;
 		this.user = user;
 		this.startTask = startTask;
@@ -57,6 +60,7 @@ public class Task {
 		this.url = url;
 		this.method = method;
 		this.header = header;
+		this.active = active;
 	}
 
 	public Integer getId() {
@@ -130,4 +134,12 @@ public class Task {
 	public void setHeader(List<Header> header) {
 		this.header = header;
 	}
+
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", executeIn=" + executeIn + ", active=" + active + ", startTask=" + startTask
+				+ ", endTask=" + endTask + ", url=" + url + ", method=" + method + ", user=" + user + ", header="
+				+ header + "]";
+	}
+
 }

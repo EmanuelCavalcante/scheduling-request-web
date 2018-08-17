@@ -50,16 +50,8 @@ public class RequestHttpUtil {
 			while ((inputLine = in.readLine()) != null) {
 				response += inputLine;
 			}
-			try {
-				JsonParser parser = new JsonParser();
-				jsonResponse = new JsonObject();
-				jsonResponse = parser.parse(response).getAsJsonObject();
-				taskExecuted.setResult(jsonResponse.toString());
-			} catch (Exception e) {
-				e.printStackTrace();
-				taskExecuted.setResult(e.toString());
-			}
-			// }
+
+			taskExecuted.setResult(response);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

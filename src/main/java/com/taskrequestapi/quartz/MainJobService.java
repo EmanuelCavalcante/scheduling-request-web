@@ -34,7 +34,8 @@ public class MainJobService {
 				TaskExecuted taskExecuted = request.request(task);
 				taskExecuted.setUser(user);
 				taskExecuted.setTask(task);
-				taskExecutedService.save(taskExecuted);
+				TaskExecuted taskExecutedDb = taskExecutedService.save(taskExecuted);
+				System.out.println(taskExecutedDb.toString());
 			}
 		}
 	}

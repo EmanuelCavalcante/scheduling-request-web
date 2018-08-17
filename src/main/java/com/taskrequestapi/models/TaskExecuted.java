@@ -5,15 +5,19 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "task_executed")
 public class TaskExecuted {
 
-	@Column
 	@Id
+	@GeneratedValue
 	private Integer id;
 
 	@Column
@@ -25,11 +29,11 @@ public class TaskExecuted {
 	@Column
 	private String result;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_user", nullable = false)
 	private User user;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_task", nullable = false)
 	private Task task;
 
@@ -91,4 +95,11 @@ public class TaskExecuted {
 	public void setResult(String result) {
 		this.result = result;
 	}
+
+	@Override
+	public String toString() {
+		return "TaskExecuted [id=" + id + ", erro=" + erro + ", date=" + date + ", result=" + result + ", user=" + user
+				+ ", task=" + task + "]";
+	}
+
 }
