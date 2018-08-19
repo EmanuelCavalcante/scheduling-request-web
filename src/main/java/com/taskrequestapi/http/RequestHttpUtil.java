@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.taskrequestapi.models.Header;
 import com.taskrequestapi.models.Task;
 import com.taskrequestapi.models.TaskExecuted;

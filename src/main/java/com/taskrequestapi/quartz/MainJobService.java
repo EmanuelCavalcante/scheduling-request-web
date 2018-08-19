@@ -1,6 +1,7 @@
 package com.taskrequestapi.quartz;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,9 @@ public class MainJobService {
 				taskExecuted.setUser(user);
 				taskExecuted.setTask(task);
 				TaskExecuted taskExecutedDb = taskExecutedService.save(taskExecuted);
-				System.out.println(taskExecutedDb.toString());
+				System.out.println();
+				System.out.println(new Date() + " || " + taskExecutedDb);
+
 			}
 		}
 	}

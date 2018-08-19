@@ -1,7 +1,5 @@
 package com.taskrequestapi.quartz;
 
-import java.util.Properties;
-
 import javax.sql.DataSource;
 
 import org.quartz.SimpleTrigger;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
@@ -17,26 +16,13 @@ import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 @Configuration
 public class QuartzConfig {
 
-	// @Value("${org.quartz.scheduler.instanceName}")
-	private String instanceName = "spring-boot-quartz-demo";
-
-	// @Value("${org.quartz.scheduler.instanceId}")
-	private String instanceId = "AUTO";
-
-	// @Value("${org.quartz.threadPool.threadCount}")
-	private String threadCount = "5";
-
-	// @Value("${job.startDelay}")
 	private Long startDelay = 0l;
 
-	// @Value("${job.repeatInterval}")
 	private Long repeatInterval = 60000l;
 
-	// @Value("${job.description}")
-	private String description = "Sample job";
+	private String description = "Job principal";
 
-	// @Value("${job.key}")
-	private String key = "StatisticsJob";
+	private String key = "jobPrincipal";
 
 	@Autowired
 	private DataSource dataSource;
@@ -53,18 +39,11 @@ public class QuartzConfig {
 	public SchedulerFactoryBean schedulerFactoryBean(ApplicationContext applicationContext) {
 
 		SchedulerFactoryBean factory = new SchedulerFactoryBean();
-
+		factory.setConfigLocation(new ClassPathResource("quartz.properties"));
 		factory.setOverwriteExistingJobs(true);
 		factory.setJobFactory(jobFactory(applicationContext));
-
-		Properties quartzProperties = new Properties();
-		quartzProperties.setProperty("org.quartz.scheduler.instanceName", instanceName);
-		quartzProperties.setProperty("org.quartz.scheduler.instanceId", instanceId);
-		quartzProperties.setProperty("org.quartz.threadPool.threadCount", threadCount);
-
 		factory.setDataSource(dataSource);
 
-		factory.setQuartzProperties(quartzProperties);
 		factory.setTriggers(emailJobTrigger().getObject());
 
 		return factory;
