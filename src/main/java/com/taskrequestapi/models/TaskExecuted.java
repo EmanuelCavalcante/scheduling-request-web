@@ -20,7 +20,7 @@ public class TaskExecuted {
 	private Integer id;
 
 	@Column
-	private Boolean erro;
+	private Boolean erro = false;
 
 	@Column
 	private Timestamp date;

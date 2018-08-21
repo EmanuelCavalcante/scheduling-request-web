@@ -25,7 +25,6 @@ public class User {
 
 	public User(String email, String password, boolean active) {
 		super();
-		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.active = active;

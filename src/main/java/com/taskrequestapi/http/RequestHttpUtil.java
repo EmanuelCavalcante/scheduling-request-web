@@ -8,7 +8,6 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import com.google.gson.JsonObject;
 import com.taskrequestapi.models.Header;
 import com.taskrequestapi.models.Task;
 import com.taskrequestapi.models.TaskExecuted;
@@ -21,7 +20,6 @@ public class RequestHttpUtil {
 
 	public TaskExecuted request(Task task) {
 		TaskExecuted taskExecuted = new TaskExecuted();
-		JsonObject jsonResponse = null;
 		try {
 			URL obj = new URL(task.getUrl());
 

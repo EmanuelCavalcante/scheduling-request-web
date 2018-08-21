@@ -6,14 +6,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.lang.NonNull;
+
 @Entity
 @Table(name = "header")
 public class Header {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	@NonNull
 	@Column
 	private String key;
+	@NonNull
 	@Column
 	private String value;
 

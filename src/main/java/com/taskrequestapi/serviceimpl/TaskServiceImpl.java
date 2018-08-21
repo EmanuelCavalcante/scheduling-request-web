@@ -16,7 +16,7 @@ import com.taskrequestapi.service.TaskService;
 
 @Service
 public class TaskServiceImpl implements TaskService {
-	private static final int NUMBER_BEGINNING = 1;
+	private static final int NUMBER_BEGINNING = 0;
 	private static final int NUMBER_END = 60;
 
 	@Autowired
@@ -80,11 +80,13 @@ public class TaskServiceImpl implements TaskService {
 	private Set<Integer> getMultiples(Integer number) {
 		Set<Integer> numbers = new HashSet<>();
 		for (int i = NUMBER_BEGINNING; i <= NUMBER_END; i++) {
-			if (number % i == 0) {
-				numbers.add(i);
-			}
-			if (i % number == 0) {
-				numbers.add(i);
+			if (i != 0) {
+				if (number % i == 0) {
+					numbers.add(i);
+				}
+				if (i % number == 0) {
+					numbers.add(i);
+				}
 			}
 
 		}

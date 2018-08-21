@@ -35,10 +35,8 @@ public class MainJobService {
 				TaskExecuted taskExecuted = request.request(task);
 				taskExecuted.setUser(user);
 				taskExecuted.setTask(task);
-				TaskExecuted taskExecutedDb = taskExecutedService.save(taskExecuted);
-				System.out.println();
-				System.out.println(new Date() + " || " + taskExecutedDb);
-
+			TaskExecuted taskExecutedDb =	taskExecutedService.save(taskExecuted);
+			System.out.println(new Date() + " :" + taskExecuted);
 			}
 		}
 	}
