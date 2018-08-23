@@ -77,14 +77,17 @@ public class TaskServiceImpl implements TaskService {
 		}
 	}
 
-	private Set<Integer> getMultiples(Integer number) {
+	private Set<Integer> getMultiples(Integer minute) {
 		Set<Integer> numbers = new HashSet<>();
+		if (minute == 0) {
+			minute = 60;
+		}
 		for (int i = NUMBER_BEGINNING; i <= NUMBER_END; i++) {
 			if (i != 0) {
-				if (number % i == 0) {
+				if (minute % i == 0) {
 					numbers.add(i);
 				}
-				if (i % number == 0) {
+				if (i % minute == 0) {
 					numbers.add(i);
 				}
 			}
