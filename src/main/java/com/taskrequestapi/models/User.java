@@ -19,6 +19,9 @@ public class User {
 	@Column
 	private boolean active = true;
 
+	@Column(name = "user_is_vip")
+	private Boolean userIsVip = false;
+
 	public User() {
 		super();
 	}
@@ -60,6 +63,14 @@ public class User {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public boolean isUserIsVip() {
+		return userIsVip;
+	}
+
+	public void setUserIsVip(boolean userIsVip) {
+		this.userIsVip = userIsVip;
 	}
 
 	@Override

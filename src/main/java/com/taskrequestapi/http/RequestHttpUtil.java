@@ -51,6 +51,7 @@ public class RequestHttpUtil {
 			taskExecuted.setResult(response);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			taskExecuted.setErro(true);
 			e.printStackTrace();
 			taskExecuted.setResult(e.toString());
 		}

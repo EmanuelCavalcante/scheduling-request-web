@@ -1,5 +1,6 @@
 package com.taskrequestapi.quartz;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import com.taskrequestapi.models.User;
 import com.taskrequestapi.service.TaskExecutedService;
 import com.taskrequestapi.service.TaskService;
 import com.taskrequestapi.service.UserService;
+import com.taskrequestapi.utils.email.SendEmail;
 
 @Service
 public class MainJobService {
@@ -35,8 +37,18 @@ public class MainJobService {
 				TaskExecuted taskExecuted = request.request(task);
 				taskExecuted.setUser(user);
 				taskExecuted.setTask(task);
-			TaskExecuted taskExecutedDb =	taskExecutedService.save(taskExecuted);
-			System.out.println(new Date() + " :" + taskExecuted);
+				TaskExecuted taskExecutedDb = taskExecutedService.save(taskExecuted);
+				if (taskExecutedDb.getErro()) {
+					if (user.isUserIsVip()) {
+						try {
+							SendEmail.sendEmail(taskExecutedDb.getResult(), user.getEmail());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				System.out.println(new Date() + " :" + taskExecuted);
 			}
 		}
 	}
