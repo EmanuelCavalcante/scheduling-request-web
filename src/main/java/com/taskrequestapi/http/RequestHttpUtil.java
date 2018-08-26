@@ -18,7 +18,7 @@ public class RequestHttpUtil {
 
 	private static HttpURLConnection conn;
 
-	public TaskExecuted request(Task task) {
+	public TaskExecuted sendRequest(Task task) {
 		TaskExecuted taskExecuted = new TaskExecuted();
 		try {
 			URL obj = new URL(task.getUrl());
@@ -52,7 +52,6 @@ public class RequestHttpUtil {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			taskExecuted.setErro(true);
-			e.printStackTrace();
 			taskExecuted.setResult(e.toString());
 		}
 		Timestamp times = new Timestamp(new Date().getTime());

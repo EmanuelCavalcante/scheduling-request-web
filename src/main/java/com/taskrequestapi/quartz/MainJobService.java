@@ -34,7 +34,7 @@ public class MainJobService {
 		for (User user : userActives) {
 			List<Task> taskOfUser = taskService.listTaskForUserAndTime(user, calendar);
 			for (Task task : taskOfUser) {
-				TaskExecuted taskExecuted = request.request(task);
+				TaskExecuted taskExecuted = request.sendRequest(task);
 				taskExecuted.setUser(user);
 				taskExecuted.setTask(task);
 				TaskExecuted taskExecutedDb = taskExecutedService.save(taskExecuted);
