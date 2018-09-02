@@ -5,13 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "user_system")
 public class User {
+	
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	@NotBlank
 	@Column
 	private String email;
 	@Column

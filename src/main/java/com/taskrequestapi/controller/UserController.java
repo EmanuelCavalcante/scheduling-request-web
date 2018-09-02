@@ -24,11 +24,11 @@ public class UserController {
 	public String cadastrar(@Valid User cerv,BindingResult result, Model model,RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
-			model.addAttribute("message", "Form error");
+			model.addAttribute("menssage", "Form error");
 			return "user/RegisterUser";
 		}
 		
-		attributes.addFlashAttribute("message", "Saved successfully!");
+		attributes.addFlashAttribute("menssage", "Saved successfully!");
 		return "redirect:/user/new";
 	}
 }
